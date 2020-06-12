@@ -1,0 +1,6 @@
+docker network create aforo255-test
+
+docker run --name mysql-database-test --network aforo255-test  -e MYSQL_ROOT_PASSWORD=Aforo255#2019 -p 3307:3306 -p 33061:33060 -d mysql
+docker run -e "ACCEPT_EULA=Y" --network aforo255-test -e "SA_PASSWORD=Aforo255#2019"  -p 1434:1433 --name sql-database-test -d mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+docker run --name postgres-database-test --network aforo255-test -e POSTGRES_PASSWORD=Aforo255#2019  -d -p 5434:5432  postgres
+docker run -p 27018:27017 --network aforo255-test --name mongo-database-test -d mongo
