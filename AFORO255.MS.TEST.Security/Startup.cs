@@ -24,10 +24,12 @@ namespace AFORO255.MS.TEST.Security
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             //Start - JWT
             services.AddJwtCustomized();
             services.Configure<JwtOptions>(Configuration.GetSection("jwt"));
             //End - JWT
+
             //Start - Database
             services.AddDbContext<ContextDatabase>(
             options =>
