@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Steeltoe.Extensions.Configuration.ConfigServer;
 
 namespace AFORO255.MS.TEST.Invoice
 {
@@ -19,6 +13,11 @@ namespace AFORO255.MS.TEST.Invoice
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((host, builder) =>
+                {
+                    var env = host.HostingEnvironment;
+                    builder.AddConfigServer(env.EnvironmentName);
+                })
                 .UseStartup<Startup>();
     }
 }

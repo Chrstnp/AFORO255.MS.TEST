@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AFORO255.MS.TEST.Security.Repository;
+using AFORO255.MS.TEST.Security.Repository.Data;
+using AFORO255.MS.TEST.Security.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace AFORO255.MS.TEST.Security
 {
@@ -25,6 +23,17 @@ namespace AFORO255.MS.TEST.Security
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //Start - Database
+            services.AddDbContext<ContextDatabase>(
+            options =>
+            {
+                options.UseSqlServer(Configuration["cnsql"]);
+            });
+            services.AddScoped<IContextDatabase, ContextDatabase>();
+            //End - Database
+
+            services.AddScoped<IServiceAccess, ServiceAccess>();
+            services.AddScoped<IRepositoryAccess, RepositoryAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

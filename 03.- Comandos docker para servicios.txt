@@ -1,0 +1,1 @@
+docker run -d --name config-service-test --network aforo255-test -p 8888:8888 -e SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Chrstnp/msTestConfig  hyness/spring-cloud-config-server

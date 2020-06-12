@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Steeltoe.Extensions.Configuration.ConfigServer;
 
 namespace AFORO255.MS.TEST.Security
 {
@@ -19,6 +20,11 @@ namespace AFORO255.MS.TEST.Security
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((host, builder) =>
+                {
+                    var env = host.HostingEnvironment;
+                    builder.AddConfigServer(env.EnvironmentName);
+                })
                 .UseStartup<Startup>();
     }
 }
