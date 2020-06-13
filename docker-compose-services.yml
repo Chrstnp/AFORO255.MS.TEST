@@ -30,7 +30,7 @@ services:
     image: fabiolb/fabio
     container_name: balancer-service-test
     environment:
-    - FABIO_REGISTRY_CONSUL_ADDR=consul-service:8500
+    - FABIO_REGISTRY_CONSUL_ADDR=consul-service-test:8500
     ports:
     - 9998:9998
     - 9999:9999
