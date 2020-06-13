@@ -19,6 +19,10 @@ namespace AFORO255.MS.TEST.Gateway
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile("ocelot.json", optional: false);
+                })
                 .UseStartup<Startup>();
     }
 }
