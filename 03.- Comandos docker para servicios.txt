@@ -1,2 +1,7 @@
 docker run -d --name config-service-test --network aforo255-test -p 8888:8888 -e SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/Chrstnp/msTestConfig  hyness/spring-cloud-config-server
+
 docker run -d -p 15672:15672 -p 5672:5672 --network aforo255-test --name bus-service rabbitmq:3-management
+
+docker run --name consul-service-test --network aforo255-test -p 8500:8500 -d consul
+ 
+docker run --name balancer-service-test --network aforo255-test -e FABIO_REGISTRY_CONSUL_ADDR=consul-service-test:8500 -p 9998:9998 -p 9999:9999 -d  fabiolb/fabio
