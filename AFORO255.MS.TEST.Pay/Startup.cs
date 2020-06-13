@@ -1,11 +1,15 @@
-﻿using AFORO255.MS.TEST.Pay.Repository;
+﻿using AFORO255.MS.TEST.Pay.RabbitMq.CommandHandlers;
+using AFORO255.MS.TEST.Pay.RabbitMq.Commands;
+using AFORO255.MS.TEST.Pay.Repository;
 using AFORO255.MS.TEST.Pay.Repository.Data;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MS.AFORO255.Cross.RabbitMQ.RabbitMq;
 
 namespace AFORO255.MS.TEST.Pay
 {
@@ -33,6 +37,14 @@ namespace AFORO255.MS.TEST.Pay
             //End - Database
 
             services.AddScoped<IRepositoryOperation, RepositoryOperation>();
+
+            /*Start RabbitMQ*/
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMQ();
+            services.AddTransient<IRequestHandler<PaymentCreateCommand, bool>, PaymentCommandHandler>();
+            services.AddTransient<IRequestHandler<TransactionCreateCommand, bool>, TransactionCommandHandler>();
+            /*End RabbitMQ*/
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
