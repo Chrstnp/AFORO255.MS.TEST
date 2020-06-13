@@ -1,0 +1,45 @@
+﻿version: "3.5"
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql-database-test
+    restart: always
+    environment:
+    - MYSQL_ROOT_PASSWORD=Aforo255#2019
+    ports:
+    - 3307:3306
+    - 33061:33060
+    networks:
+    - aforo255-test
+  sql:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    container_name: sql-database-test
+    restart: always
+    ports:
+    - 1434:1433
+    environment:
+    - ACCEPT_EULA=Y
+    - SA_PASSWORD=Aforo255#2019
+    networks:
+    - aforo255-test
+  postgres:
+    image: postgres
+    container_name: postgres-database-test
+    environment:
+    - POSTGRES_PASSWORD=Aforo255#2019
+    ports:
+    - 5434:5432
+    networks:
+    - aforo255-test
+  mongo:
+    image: mongo
+    container_name: mongo-database-test
+    ports:
+    - 27018:27017
+    networks:
+    - aforo255-test
+
+networks:
+  aforo255:
+    name: aforo255-test

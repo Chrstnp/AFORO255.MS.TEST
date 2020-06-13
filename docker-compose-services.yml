@@ -1,0 +1,44 @@
+﻿version: "3.5"
+
+services:
+  config:
+    image: hyness/spring-cloud-config-server
+    container_name: config-service-test
+    environment:
+    - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/ivancuadros1988/msconfig
+    ports:
+    - 8888:8888
+    networks:
+    - aforo255-test
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: bus-service
+    ports:
+    - 5672:5672
+    - 15672:15672
+    networks:
+    - aforo255-test
+  consul:
+    image: consul
+    container_name: consul-service-test
+    restart: always
+    ports:
+    - 8500:8500
+    networks:
+    - aforo255-test
+  fabio:
+    image: fabiolb/fabio
+    container_name: balancer-service-test
+    environment:
+    - FABIO_REGISTRY_CONSUL_ADDR=consul-service:8500
+    ports:
+    - 9998:9998
+    - 9999:9999
+    networks:
+    - aforo255-test
+    depends_on:
+    - consul
+
+networks:
+  aforo255:
+    name: aforo255-test
