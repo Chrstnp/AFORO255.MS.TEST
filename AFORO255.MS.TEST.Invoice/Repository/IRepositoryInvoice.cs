@@ -5,5 +5,6 @@ namespace AFORO255.MS.TEST.Invoice.Repository
     public interface IRepositoryInvoice
     {
         IEnumerable<Model.Invoice> GetAll();
+        bool Pay(int idInvoice);
     }
 }
