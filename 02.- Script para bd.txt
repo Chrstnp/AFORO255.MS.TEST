@@ -56,4 +56,4 @@ amount DECIMAL(16, 4),
 date datetime
 );
 
-SELECT * FROM Operation;
+SELECT * FROM Operations;

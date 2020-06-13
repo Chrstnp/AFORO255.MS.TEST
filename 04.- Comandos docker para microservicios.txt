@@ -1,0 +1,5 @@
+sudo docker run -d -p 9000:8080 --name=app-gateway --network aforo255-test cripa/aforo255mstestgateway
+sudo docker run -d -p 9001:8080 --name=app-security --network aforo255-test cripa/app-security
+sudo docker run -d -p 9002:8080 --name=app-invoices --network aforo255-test cripa/app-invoices
+sudo docker run -d -p 9003:8080 --name=app-pay --network aforo255-test cripa/app-pay
+sudo docker run -d -p 9006:8080 --name=app-transaction --network aforo255-test cripa/app-transaction

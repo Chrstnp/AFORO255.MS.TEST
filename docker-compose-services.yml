@@ -40,5 +40,5 @@ services:
     - consul
 
 networks:
-  aforo255:
+  aforo255-test:
     name: aforo255-test
