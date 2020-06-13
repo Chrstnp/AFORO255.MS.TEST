@@ -21,7 +21,8 @@ namespace AFORO255.MS.TEST.Gateway
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddJsonFile("ocelot.json", optional: false);
+                    config.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: false, reloadOnChange: true);
                 })
                 .UseStartup<Startup>();
     }
