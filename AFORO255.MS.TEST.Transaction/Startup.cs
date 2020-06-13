@@ -1,10 +1,15 @@
-﻿using AFORO255.MS.TEST.Transaction.Repository;
+﻿using AFORO255.MS.TEST.Transaction.RabbitMQ.EventHandlers;
+using AFORO255.MS.TEST.Transaction.RabbitMQ.Events;
+using AFORO255.MS.TEST.Transaction.Repository;
 using AFORO255.MS.TEST.Transaction.Service;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MS.AFORO255.Cross.RabbitMQ.RabbitMq;
+using MS.AFORO255.Cross.RabbitMQ.RabbitMq.Bus;
 
 namespace AFORO255.MS.TEST.Transaction
 {
@@ -22,6 +27,15 @@ namespace AFORO255.MS.TEST.Transaction
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            /*Start RabbitMQ*/
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMQ();
+            //Subscriptions
+            services.AddTransient<TransactionEventHandler>();
+
+            services.AddTransient<IEventHandler<TransactionCreatedEvent>, TransactionEventHandler>();
+            /*End RabbitMQ*/
+
             services.AddScoped<IServiceTransaction, ServiceTransaction>();
             services.AddScoped<IRepositoryTransation, RepositoryTransation>();
 
@@ -36,6 +50,14 @@ namespace AFORO255.MS.TEST.Transaction
             }
 
             app.UseMvc();
+
+            ConfigureEventBus(app);
+        }
+
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<TransactionCreatedEvent, TransactionEventHandler>();
         }
     }
 }

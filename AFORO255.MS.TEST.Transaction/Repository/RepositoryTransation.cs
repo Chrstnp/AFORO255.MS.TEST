@@ -1,6 +1,7 @@
 ﻿using AFORO255.MS.TEST.Transaction.Model;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using System.Threading.Tasks;
 
 namespace AFORO255.MS.TEST.Transaction.Repository
 {
@@ -24,5 +25,6 @@ namespace AFORO255.MS.TEST.Transaction.Repository
                 return _database.GetCollection<PayTransaction>("PayTransaction");
             }
         }
+
     }
 }

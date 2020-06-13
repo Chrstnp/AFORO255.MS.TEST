@@ -1,7 +1,7 @@
 ﻿using MS.AFORO255.Cross.RabbitMQ.RabbitMq.Events;
 using System;
 
-namespace AFORO255.MS.TEST.Pay.RabbitMq.Events
+namespace AFORO255.MS.TEST.Transaction.RabbitMQ.Events
 {
     public class TransactionCreatedEvent : Event
     {
